@@ -9,8 +9,9 @@ class Show_agent(QWidget):
         self.phone = QLabel(self)
         self.name.setGeometry(30, 20, 230, 20)
         self.phone.setGeometry(30, 60, 230, 20)
+        self.setWindowTitle('Мой агент')
 
-        conn = sqlite3.connect(r'../Users/lulun/PycharmProjects/PythonProject1/insurance.sqlite')
+        conn = sqlite3.connect(r'insurance.sqlite')
         cursor = conn.cursor()
 
         line = cursor.execute(f'''SELECT InsuranceAgent.full_name, InsuranceAgent.phone FROM InsuranceAgent

@@ -13,11 +13,12 @@ class New_service(QWidget):
         self.pol = QComboBox(self)
         self.form_button = QPushButton(self)
         self.setUI()
+        self.setWindowTitle('Новая услуга')
 
     def setUI(self):
         # self.name.setPlaceholderText('Введите ФИО')
         self.calendar.setCalendarPopup(True)
-        conn = sqlite3.connect(r'../Users/lulun/PycharmProjects/PythonProject1/insurance.sqlite')
+        conn = sqlite3.connect(r'insurance.sqlite')
         cursor = conn.cursor()
 
         for i in cursor.execute('''SELECT event_description FROM InsuranceEvent''').fetchall():
@@ -33,7 +34,7 @@ class New_service(QWidget):
         # name = self.name.text()
         date = '-'.join(list(reversed(self.calendar.text().split('.'))))
         pol = self.pol.currentText()
-        con = sqlite3.connect(r'../Users/lulun/PycharmProjects/PythonProject1/insurance.sqlite')
+        con = sqlite3.connect(r'C:\Users\lulun\PycharmProjects\PythonProject1\insurance.sqlite')
         cursor = con.cursor()
 
         line = cursor.execute(f'''SELECT InsuranceAgent.id_agent, query_1.id_client FROM InsuranceAgent

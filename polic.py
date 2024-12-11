@@ -15,6 +15,7 @@ class Polic_form(QWidget):
         self.pol = QComboBox(self)
         self.form_button = QPushButton(self)
         self.setUI()
+        self.setWindowTitle('Оформление полиса')
 
     def setUI(self):
         self.name.setPlaceholderText('Введите ФИО')
@@ -32,7 +33,7 @@ class Polic_form(QWidget):
         name = self.name.text()
         date = '-'.join(list(reversed(self.calendar.text().split('.'))))
         pol = self.pol.currentText()
-        con = sqlite3.connect(r'../Users/lulun/PycharmProjects/PythonProject1/insurance.sqlite')
+        con = sqlite3.connect(r'insurance.sqlite')
         kursor = con.cursor()
 
         kursor.execute(f'''UPDATE Client SET
@@ -67,5 +68,6 @@ class Polic_form(QWidget):
         path, _ = QFileDialog.getSaveFileName(self, 'Save Excel', '.', 'Excel(*.docx)')
         if not path:
             self.item = QMessageBox.information(self, 'Внимание', 'Не указан файл для сохранения.')
+            self.item.setWindowTitle('Ошибка')
             return
         doc.save(path)

@@ -9,6 +9,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtSql import QSqlDatabase, QSqlRelationalTableModel, QSqlRelation
 from PyQt6.QtWidgets import QApplication, QMainWindow, QDialog, QMessageBox, QTableWidgetItem, QVBoxLayout, QWidget, \
     QLineEdit, QPushButton, QFileDialog, QComboBox, QCalendarWidget, QDateEdit, QTableView, QTableWidget, QLabel
+from random import randint
 
 ACCESS_LEVEL = 2
 LOGIN = ''
@@ -18,16 +19,17 @@ class Registration(QDialog):
     def __init__(self):
         super().__init__()
         self.item = None
-        uic.loadUi(r'design\reg.ui', self)
+        uic.loadUi(r'reg.ui', self)
         self.registration.clicked.connect(self.new_user)
+        self.setWindowTitle('Регистрация')
 
     def new_user(self):
         try:
             conn = sqlite3.connect(r'insurance.sqlite')
             cursor = conn.cursor()
 
-            cursor.execute('''INSERT INTO Client(login, password, phone) VALUES (?, ?, ?)''',
-                           (self.login.text(), self.password.text(), self.phone.text()))
+            cursor.execute('''INSERT INTO Client(login, password, phone, id_agent) VALUES (?, ?, ?, ?)''',
+                           (self.login.text(), self.password.text(), self.phone.text(), str(randint(1, 5))))
 
             conn.commit()
             conn.close()
@@ -39,6 +41,7 @@ class Registration(QDialog):
 
         except IndexError:
             self.item = QMessageBox()
+            self.item.setWindowTitle('Ошибка')
             self.item.setText('НЕВЕРНЫЕ ДАННЫЕ')
             self.item.show()
 
@@ -48,7 +51,8 @@ class Login(QDialog):
     def __init__(self):
         super().__init__()
         self.item = None
-        uic.loadUi(r'design\login.ui', self)
+        uic.loadUi(r'login.ui', self)
+        self.setWindowTitle('Авторизация')
         self.client.clicked.connect(self.as_client)
         self.agent.clicked.connect(self.as_agent)
         self.registration.clicked.connect(self.new_user)
@@ -66,10 +70,12 @@ class Login(QDialog):
                 self.accept()
             else:
                 self.item = QMessageBox()
+                self.item.setWindowTitle('Ошибка')
                 self.item.setText('НЕВЕРНЫЙ ЛОГИН ИЛИ ПАРОЛЬ')
                 self.item.show()
         except IndexError:
             self.item = QMessageBox()
+            self.item.setWindowTitle('Ошибка')
             self.item.setText('НЕВЕРНЫЙ ЛОГИН ИЛИ ПАРОЛЬ')
             self.item.show()
 
@@ -82,10 +88,12 @@ class Login(QDialog):
                 self.accept()
             else:
                 self.item = QMessageBox()
+                self.item.setWindowTitle('Ошибка')
                 self.item.setText('НЕВЕРНЫЙ ЛОГИН ИЛИ ПАРОЛЬ')
                 self.item.show()
         except IndexError:
             self.item = QMessageBox()
+            self.item.setWindowTitle('Ошибка')
             self.item.setText('НЕВЕРНЫЙ ЛОГИН ИЛИ ПАРОЛЬ')
             self.item.show()
 
@@ -100,11 +108,12 @@ class MainWindow(QMainWindow):
         self.table = None
         if aut.exec():
             if ACCESS_LEVEL == 2:
-                uic.loadUi(r'design\client_main.ui', self)
+                uic.loadUi(r'C:\Users\lulun\PycharmProjects\PythonProject1\design\client_main.ui', self)
                 self.layout_client()
             elif ACCESS_LEVEL == 1:
-                uic.loadUi(r'design\agent_main.ui', self)
+                uic.loadUi(r'C:\Users\lulun\PycharmProjects\PythonProject1\design\agent_main.ui', self)
                 self.layout_agent()
+        self.setWindowTitle('Главное окно')
 
     def layout_client(self):
         self.polic.clicked.connect(self.polic_form)
@@ -200,7 +209,7 @@ def search(column: str, table: str, uslovie: str):
 
 def set_con():
     con = QSqlDatabase.addDatabase("QSQLITE", 'INS')
-    con.setDatabaseName(r"insurance.sqlite")
+    con.setDatabaseName(r"C:\Users\lulun\PycharmProjects\PythonProject1\insurance.sqlite")
     if not con.open():
         QMessageBox.critical(
             None,
