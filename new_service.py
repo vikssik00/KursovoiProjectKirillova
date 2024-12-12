@@ -34,7 +34,7 @@ class New_service(QWidget):
         # name = self.name.text()
         date = '-'.join(list(reversed(self.calendar.text().split('.'))))
         pol = self.pol.currentText()
-        con = sqlite3.connect(r'C:\Users\lulun\PycharmProjects\PythonProject1\insurance.sqlite')
+        con = sqlite3.connect(r'insurance.sqlite')
         cursor = con.cursor()
 
         line = cursor.execute(f'''SELECT InsuranceAgent.id_agent, query_1.id_client FROM InsuranceAgent
