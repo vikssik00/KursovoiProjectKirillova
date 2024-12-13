@@ -108,10 +108,10 @@ class MainWindow(QMainWindow):
         self.table = None
         if aut.exec():
             if ACCESS_LEVEL == 2:
-                uic.loadUi(r'C:\Users\lulun\PycharmProjects\PythonProject1\design\client_main.ui', self)
+                uic.loadUi(r'client_main.ui', self)
                 self.layout_client()
             elif ACCESS_LEVEL == 1:
-                uic.loadUi(r'C:\Users\lulun\PycharmProjects\PythonProject1\design\agent_main.ui', self)
+                uic.loadUi(r'agent_main.ui', self)
                 self.layout_agent()
         self.setWindowTitle('Главное окно')
 
@@ -209,7 +209,7 @@ def search(column: str, table: str, uslovie: str):
 
 def set_con():
     con = QSqlDatabase.addDatabase("QSQLITE", 'INS')
-    con.setDatabaseName(r"C:\Users\lulun\PycharmProjects\PythonProject1\insurance.sqlite")
+    con.setDatabaseName(r'insurance.sqlite')
     if not con.open():
         QMessageBox.critical(
             None,
